@@ -1,58 +1,92 @@
 import java.io.File;
-import java.util.*;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+// The objective of this class is load the data from the .csv file
+//and returna an array of a chosen amount and a list of location.
 
 public class readVehiclesData {
 
-    public static void main(String[] args) throws Exception {
+    Method<Vehicles> loadData(int stopAt) throws FileNotFoundException {
+
         //parsing and reading the CSV file data into the object array
         File directory = new File("./");
         String name = directory.getAbsolutePath() + "//vehicles.csv";
-        Vehicles[] vehicle;
+        //Vehicles[] vehicle;
 
-        Method<Vehicles> vehicles = new Method<>();// create a new array to
+        // take the methods
+        Method <Vehicles> vehicles = new Method<>();
 
         try (Scanner scanner = new Scanner(new File(name))) {
-            vehicle = new Vehicles[10000];
+
 
             // this will just print the header in CSV file
             scanner.nextLine();
             int i = 0;
             String sGetData;
+            int iterator = 0;
             while (scanner.hasNextLine()) {
+                
+                // the if  command stops adding vehicles on my list
+
+                if (iterator== stopAt){
+                    break;
+                }
+
                 sGetData = scanner.nextLine();
                 String[] data = sGetData.split(",");
-                vehicle[i++] = new Vehicles(Integer.parseInt(data[0]),
-                        data[1],
-                        data[2],
-                        data[3],
-                        Integer.parseInt(data[4]),
-                        Long.parseLong(data[5]));
-
                 vehicles.add(new Vehicles(Integer.parseInt(data[0]),
                         data[1],
                         data[2],
                         data[3],
                         Integer.parseInt(data[4]),
                         Long.parseLong(data[5])));
+
+                iterator++;// iterator
+            }
+            //closes the scanner
+        }
+        return vehicles;
+    }
+
+    // This method contains a list of String conatining only the fuel column
+    Method<String> ColumDataload() throws FileNotFoundException{
+        //parsing and reading the CSV file data into the object array
+        File directory = new File("./");
+        String name = directory.getAbsolutePath() + "//vehicles.csv";
+        //Vehicles[] vehicle;
+        Method<Vehicles> vehicles = new Method<>();
+
+        try (Scanner scanner = new Scanner(new File(name))) {
+
+            // this will just print the header in CSV file
+            scanner.nextLine();
+            String sGetData;
+            while (scanner.hasNextLine()) {
+
+                sGetData = scanner.nextLine();
+                String[] data = sGetData.split(",");
+                vehicles.add(new Vehicles(Integer.parseInt(data[0]), data[1], data[2], data[3], Integer.parseInt(data[4]), Long.parseLong(data[5])));
             }
             //closes the scanner
         }
 
-        // we can print details due to overridden toString method in the class below
-        System.out.println(vehicle[0]);
-        System.out.println(vehicle[1]);
 
-        // we can compare objects based on their ID due to overridden CompareTo method in the class below
-        System.out.println(vehicle[0] == vehicle[0]);
-        System.out.println(vehicle[0] == vehicle[1]);
-        System.out.println(vehicles.size());
-        vehicles.quickSort(0, vehicles.size()-1);
-    for (int i = 0; i<100; i++){
-        System.out.println(vehicles.get(i));
-    }
+        // Creates a new object to store the fuel data.
+        Method<String> fuel = new Method<>();
+        for (Vehicles vehicle : vehicles) {
+            fuel.add(vehicle.getsFuel());
+        }
+
+        return fuel;
     }
 
 }
+
+
 
 
 

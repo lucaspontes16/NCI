@@ -1,5 +1,6 @@
 
-    class Vehicles implements Comparable<Object> {
+//This class takes All the variables, constructors, to string, getters and setters
+class Vehicles implements Comparable<Object> {
         private int iId;
         private String sName;
         private String sFuel;
@@ -22,11 +23,11 @@
         public int compareTo(Object obj) {
 
         /*
-		Edit this section so it compares the appropriate
-		column you wish to sort by
+		This section compares the appropriate
+		column that I wish to sort, in this case was by postcode
          */
             Vehicles myVehicles = (Vehicles) obj;
-            return Integer.compare(this.iPostcode, myVehicles.iPostcode);
+            return Integer.compare(this.iPostcode, myVehicles.iPostcode); //according to the CA proposal, the
         }
 
         @Override
@@ -37,7 +38,6 @@
         }
 
         // getters and setters
-
         public int getiId() {
             return iId;
         }
